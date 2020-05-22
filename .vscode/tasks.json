@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile C File",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-g",
+                "main.c",
+                "communication.c",
+                "-o",
+                "${workspaceRoot}\\monitoring.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run C File",
+            "type": "shell",
+            "command": ".\\monitoring.exe",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

@@ -1,8 +1,14 @@
+#include <windows.h>
 #include <stdio.h>
+#include "communication.h"
+ 
+int main()
+{
+    char hello[] = "Hello World!\n";
+ 
+    HANDLE hSerial = initCommunication();
+    sendData(hSerial, hello);
+    closeSerialPort(hSerial);
 
-int main(void) {
-    printf("Hello World");
-    printf("Debug stops here!");
-    printf("Next");
     return 0;
 }
