@@ -3,22 +3,25 @@
 #include "communication.h"
  
 int main() {
-    HANDLE hSerial; 
-    char* received;
+    HANDLE hSerial; ;
  
     // Opening COM1 to send data
-    hSerial = openSerialPort("\\\\.\\COM1");
+    hSerial = openSerialPort("\\\\.\\COM2");
 
     if (hSerial != NULL) {
         setDCBParameters(hSerial);
         setTimeouts(hSerial);
         setReceivingMask(hSerial);
 
-        setWaitCommEvent(hSerial);
-        received = receiveData(hSerial);
-        printf("\nString received: %s\n", received);
+        while(1) {
+            setWaitCommEvent(hSerial);
+            char* received = receiveData(hSerial);
+            printf("\nString received: %s\n", received);
+            free(received);
+        }
+
+        closeSerialPort(hSerial);
     }
 
-    closeSerialPort(hSerial);
     return 0;
 }
