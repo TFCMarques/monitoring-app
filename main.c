@@ -8,6 +8,9 @@ int main()
  
     HANDLE hSerial = initCommunication();
     sendData(hSerial, hello);
+
+    receiveData(hSerial);
+
     closeSerialPort(hSerial);
 
     return 0;

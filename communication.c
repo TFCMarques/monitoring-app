@@ -10,7 +10,7 @@ HANDLE initCommunication() {
 
     // Open the highest available serial port number
     fprintf(stderr, "Opening serial port: ");
-    hSerial = CreateFile("\\\\.\\COM1", GENERIC_READ | GENERIC_WRITE, 0, NULL,
+    hSerial = CreateFile("\\\\.\\COM2", GENERIC_READ | GENERIC_WRITE, 0, NULL,
                          OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (hSerial == INVALID_HANDLE_VALUE) {
@@ -53,22 +53,51 @@ HANDLE initCommunication() {
 
 void sendData(HANDLE hSerial, char* data) {
     DWORD bytes_written;
+
     fprintf(stderr, "Sending bytes: ");
-    if (!WriteFile(hSerial, data, strlen(data), &bytes_written, NULL))
-    {
+
+    if (!WriteFile(hSerial, data, strlen(data), &bytes_written, NULL)) {
+        fprintf(stderr, "Error\n");
+        CloseHandle(hSerial);
+    } else fprintf(stderr, "%d bytes written\n", bytes_written);
+}
+
+void receiveData(HANDLE hSerial) {
+    DWORD readBytes;
+    char dataBuffer[100];
+    int state = 1;
+    char currentChar;
+
+    fprintf(stderr, "Receiving bytes: ");
+
+    if(!ReadFile(hSerial, &currentChar, 1, &readBytes, NULL)) {
         fprintf(stderr, "Error\n");
         CloseHandle(hSerial);
         return;
+    } else {
+        fprintf(stderr, "OK\n");
+
+        while(1) {
+            strncat(dataBuffer, &currentChar, 1);
+
+            if (currentChar == '\n') {
+                fprintf(stdout, "%s\n", dataBuffer);
+                return;
+            }
+
+            if(!ReadFile(hSerial, &currentChar, 1, &readBytes, NULL)) {
+                fprintf(stderr, "Receiving bytes: Error\n");
+                CloseHandle(hSerial);
+                return;
+            }
+        }
     }
-    fprintf(stderr, "%d bytes written\n", bytes_written);
 }
 
 void closeSerialPort(HANDLE hSerial) {
     fprintf(stderr, "Closing serial port: ");
-    if (CloseHandle(hSerial) == 0)
-    {
+
+    if (CloseHandle(hSerial) == 0) {
         fprintf(stderr, "Error\n");
-        return;
-    }
-    fprintf(stderr, "OK\n");
+    } else fprintf(stderr, "OK\n");
 }
