@@ -2,39 +2,55 @@
 #include <stdio.h>
 #include <string.h>
 
-HANDLE initCommunication() {
-    // Declare variables and structures
+HANDLE openSerialPort(char * serialPort) {
     HANDLE hSerial;
-    DCB dcbSerialParams = {0};
-    COMMTIMEOUTS timeouts = {0};
 
-    // Open the highest available serial port number
     fprintf(stderr, "Opening serial port: ");
-    hSerial = CreateFile("\\\\.\\COM2", GENERIC_READ | GENERIC_WRITE, 0, NULL,
+    hSerial = CreateFile(serialPort, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                          OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (hSerial == INVALID_HANDLE_VALUE) {
         fprintf(stderr, "Error\n");
         return NULL;
-    } else fprintf(stderr, "OK\n");
+    } else fprintf(stderr, "OK\n\n");
 
-    // Set device parameters (9200 baud, 1 start bit, 1 stop bit, no parity)
+    return hSerial;
+}
+
+int setDCBParameters(HANDLE hSerial) {
+    // Initializing DCB struct
+    DCB dcbSerialParams = {0};
+
     dcbSerialParams.DCBlength = sizeof(dcbSerialParams);
-    if (GetCommState(hSerial, &dcbSerialParams) == 0) {
+    
+    if (!GetCommState(hSerial, &dcbSerialParams)) {
         fprintf(stderr, "Error getting device state\n");
         CloseHandle(hSerial);
-        return NULL;
+        return 0;
     }
 
+    // Set device parameters (9200 baud, 1 start bit, 1 stop bit, no parity)
     dcbSerialParams.BaudRate = CBR_9600;
     dcbSerialParams.ByteSize = 8;
     dcbSerialParams.StopBits = ONESTOPBIT;
     dcbSerialParams.Parity = NOPARITY;
-    if (SetCommState(hSerial, &dcbSerialParams) == 0) {
+
+    if (!SetCommState(hSerial, &dcbSerialParams)) {
         fprintf(stderr, "Error setting device parameters\n");
         CloseHandle(hSerial);
-        return NULL;
+        return 0;
+    } else {
+        printf("- Setting DCB Structure: Successfull\n");
+        printf("- Baudrate = %d\n", dcbSerialParams.BaudRate);
+        printf("- ByteSize = %d\n", dcbSerialParams.ByteSize);
+        printf("- StopBits = %d\n", dcbSerialParams.StopBits);
+        printf("- Parity   = %d\n\n", dcbSerialParams.Parity);
+        return 1;
     }
+}
+
+int setTimeouts(HANDLE hSerial) {
+    COMMTIMEOUTS timeouts = {0};
 
     // Set COM port timeout settings
     timeouts.ReadIntervalTimeout = 50;
@@ -42,16 +58,34 @@ HANDLE initCommunication() {
     timeouts.ReadTotalTimeoutMultiplier = 10;
     timeouts.WriteTotalTimeoutConstant = 50;
     timeouts.WriteTotalTimeoutMultiplier = 10;
-    if (SetCommTimeouts(hSerial, &timeouts) == 0) {
+
+    if (!SetCommTimeouts(hSerial, &timeouts)) {
         fprintf(stderr, "Error setting timeouts\n");
         CloseHandle(hSerial);
-        return NULL;
-    }
-
-    return hSerial;
+        return 0;
+    } else return 1;
 }
 
-void sendData(HANDLE hSerial, char* data) {
+int setReceivingMask(HANDLE hSerial) {
+    if (!SetCommMask(hSerial, EV_RXCHAR)) {
+        fprintf(stderr, "Error setting timeouts\n");
+        CloseHandle(hSerial);
+        return 0;
+    } else return 1;
+}
+
+int setWaitCommEvent(HANDLE hSerial) {
+    DWORD dwEventMask;
+
+	fprintf(stderr, "Waiting for data to be received...\n\n");
+    if (!WaitCommEvent(hSerial, &dwEventMask, NULL)) {
+        fprintf(stderr, "Error setting timeouts\n");
+        CloseHandle(hSerial);
+        return 0;
+    } else return 1; 
+}
+
+int sendData(HANDLE hSerial, char* data) {
     DWORD bytes_written;
 
     fprintf(stderr, "Sending bytes: ");
@@ -59,45 +93,50 @@ void sendData(HANDLE hSerial, char* data) {
     if (!WriteFile(hSerial, data, strlen(data), &bytes_written, NULL)) {
         fprintf(stderr, "Error\n");
         CloseHandle(hSerial);
-    } else fprintf(stderr, "%d bytes written\n", bytes_written);
+		return 0;
+    } else {
+		fprintf(stderr, "%d bytes written\n", bytes_written);
+		return 1;
+	}
 }
 
-void receiveData(HANDLE hSerial) {
+char* receiveData(HANDLE hSerial) {
+	int i = 0, j;
     DWORD readBytes;
-    char dataBuffer[100];
-    int state = 1;
+    char* dataBuffer = (char*) malloc(sizeof(char) * 256);
     char currentChar;
 
-    fprintf(stderr, "Receiving bytes: ");
+    fprintf(stderr, "Receiving bytes...\n");
 
-    if(!ReadFile(hSerial, &currentChar, 1, &readBytes, NULL)) {
-        fprintf(stderr, "Error\n");
-        CloseHandle(hSerial);
-        return;
-    } else {
-        fprintf(stderr, "OK\n");
+    do {
+        if(!ReadFile(hSerial, &currentChar, sizeof(currentChar), &readBytes, NULL)) {
+            fprintf(stderr, "Error receiving bytes.\n");
+            CloseHandle(hSerial);
+       		return NULL;
+		} else {
+			dataBuffer[i++] = currentChar;
+		}
+    } while(readBytes > 0);
 
-        while(1) {
-            strncat(dataBuffer, &currentChar, 1);
-
-            if (currentChar == '\n') {
-                fprintf(stdout, "%s\n", dataBuffer);
-                return;
-            }
-
-            if(!ReadFile(hSerial, &currentChar, 1, &readBytes, NULL)) {
-                fprintf(stderr, "Receiving bytes: Error\n");
-                CloseHandle(hSerial);
-                return;
-            }
-        }
-    }
+	// Remove last 2 duplicated chars
+	char* response = (char*) malloc(sizeof(char) * 256);
+	for(j = 0; j < i - 2; j++) {
+		response[j] = dataBuffer[j];
+	}
+	
+	free(dataBuffer);
+	response[j] = '\0';
+	return response;
 }
 
-void closeSerialPort(HANDLE hSerial) {
+int closeSerialPort(HANDLE hSerial) {
     fprintf(stderr, "Closing serial port: ");
 
-    if (CloseHandle(hSerial) == 0) {
+    if (!CloseHandle(hSerial)) {
         fprintf(stderr, "Error\n");
-    } else fprintf(stderr, "OK\n");
+		return 0;
+    } else {
+		fprintf(stderr, "OK\n");
+		return 1;
+	}
 }

@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "preLaunchTask": "Compile C File",
-            "program": "${workspaceRoot}\\${fileBasename}.exe",
+            "program": "${workspaceRoot}\\monitoring.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
