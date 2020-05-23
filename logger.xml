@@ -1,6 +1,13 @@
 <msg1>
-	<datetime> 23/05/2020 - 03:50 </datetime>
-	<wind> 329 </wind>
-	<humidity> 516 </humidity>
-	<temperature> 56 </temperature>
+	<datetime> 23/05/2020 - 15:25 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
 </msg1>
+<warning>
+	<datetime> 23/05/2020 - 15:25 </datetime>
+	<type> 1 </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>

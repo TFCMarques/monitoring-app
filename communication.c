@@ -79,16 +79,16 @@ int setWaitCommEvent(HANDLE hSerial) {
 }
 
 int sendData(HANDLE hSerial, char* data) {
-    DWORD bytes_written;
+    DWORD bytesWritten;
 
     fprintf(stderr, "Sending bytes: ");
 
-    if (!WriteFile(hSerial, data, strlen(data), &bytes_written, NULL)) {
+    if (!WriteFile(hSerial, data, strlen(data), &bytesWritten, NULL)) {
         fprintf(stderr, "Error\n");
         CloseHandle(hSerial);
 		return 0;
     } else {
-		fprintf(stderr, "%d bytes written\n", bytes_written);
+		fprintf(stderr, "%ld bytes written\n", bytesWritten);
 		return 1;
 	}
 }
@@ -98,8 +98,6 @@ char* receiveData(HANDLE hSerial) {
     DWORD readBytes;
     char* dataBuffer = (char*) malloc(sizeof(char) * 256);
     char currentChar;
-
-    fprintf(stderr, "Receiving bytes...\n");
 
     do {
         if(!ReadFile(hSerial, &currentChar, sizeof(currentChar), &readBytes, NULL)) {

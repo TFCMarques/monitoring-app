@@ -3,17 +3,31 @@
 #include <string.h>
 #include <unistd.h>
 
-int* parseMessage(char* jsonString, int start, int numValues) {
+int checkIfWarning(char* jsonString) {
+    char content[64];
+    strcpy(content, jsonString);
+
+    char* subString = strtok(content, "\"");
+    subString = strtok(NULL, "\"");
+
+    if(strcmp(subString, "Warning") == 0) {
+        return 1;
+    } 
+
+    return 0;
+}
+
+int* parseMessage(char* jsonString, int numValues) {
     int j = 0;
     int digit = 0;
     int quotes = 0;
     int length = strlen(jsonString);
-    int* parsedValues = (int*) malloc(sizeof(int) * numValues);
+    int* parsedValues = (int*) malloc(sizeof(int) * 4);
 
     for(int i = 0; i < length; i++) {
         if (jsonString[i] == '\"') {
             quotes++;
-        } else if(quotes >= start && quotes % 2 == 0) {
+        } else if(quotes % 2 == 0) {
             int number = 0;
 
             while(jsonString[i] >= '0' && jsonString[i] <= '9') {
