@@ -9,6 +9,7 @@
                 "-g",
                 "main.c",
                 "communication.c",
+                "parsers.c",
                 "-o",
                 "${workspaceRoot}\\monitoring.exe"
             ],

@@ -39,14 +39,7 @@ int setDCBParameters(HANDLE hSerial) {
         fprintf(stderr, "Error setting device parameters\n");
         CloseHandle(hSerial);
         return 0;
-    } else {
-        printf("- Setting DCB Structure: Successfull\n");
-        printf("- Baudrate = %d\n", dcbSerialParams.BaudRate);
-        printf("- ByteSize = %d\n", dcbSerialParams.ByteSize);
-        printf("- StopBits = %d\n", dcbSerialParams.StopBits);
-        printf("- Parity   = %d\n\n", dcbSerialParams.Parity);
-        return 1;
-    }
+    } else return 1;
 }
 
 int setTimeouts(HANDLE hSerial) {
