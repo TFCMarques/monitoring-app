@@ -10,6 +10,7 @@
                 "main.c",
                 "communication.c",
                 "parsers.c",
+                "utils.c",
                 "-o",
                 "${workspaceRoot}\\monitoring.exe"
             ],
