@@ -5,14 +5,14 @@
 HANDLE openSerialPort(char * serialPort) {
     HANDLE hSerial;
 
-    fprintf(stderr, "Opening serial port: ");
+    fprintf(stderr, "> Opening serial port: ");
     hSerial = CreateFile(serialPort, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                          OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (hSerial == INVALID_HANDLE_VALUE) {
-        fprintf(stderr, "Error\n");
+        fprintf(stderr, "Error.\n");
         return NULL;
-    } else fprintf(stderr, "OK\n\n");
+    } else fprintf(stderr, "OK.\n\n");
 
     return hSerial;
 }
@@ -70,7 +70,6 @@ int setReceivingMask(HANDLE hSerial) {
 int setWaitCommEvent(HANDLE hSerial) {
     DWORD dwEventMask;
 
-	fprintf(stderr, "Waiting for data to be received...\n\n");
     if (!WaitCommEvent(hSerial, &dwEventMask, NULL)) {
         fprintf(stderr, "Error setting timeouts\n");
         CloseHandle(hSerial);
@@ -96,7 +95,7 @@ int sendData(HANDLE hSerial, char* data) {
 char* receiveData(HANDLE hSerial) {
 	int i = 0, j;
     DWORD readBytes;
-    char* dataBuffer = (char*) malloc(sizeof(char) * 256);
+    char* dataBuffer = (char*) malloc(sizeof(char) * 512);
     char currentChar;
 
     do {
@@ -110,7 +109,7 @@ char* receiveData(HANDLE hSerial) {
     } while(readBytes > 0);
 
 	// Remove last 2 duplicated chars
-	char* response = (char*) malloc(sizeof(char) * 256);
+	char* response = (char*) malloc(sizeof(char) * 512);
 	for(j = 0; j < i - 2; j++) {
 		response[j] = dataBuffer[j];
 	}

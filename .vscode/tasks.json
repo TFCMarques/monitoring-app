@@ -12,8 +12,10 @@
                 "communication.c",
                 "parsers.c",
                 "utils.c",
+                "requests.c",
                 "-o",
-                "${workspaceRoot}\\monitoring.exe"
+                "${workspaceRoot}\\monitoring.exe",
+                "-lws2_32"
             ],
             "group": {
                 "kind": "build",

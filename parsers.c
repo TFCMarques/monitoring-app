@@ -61,14 +61,14 @@ void writeMsgToXML(int* values, char* datetime) {
     fclose(fileXML);
 }
 
-void writeWarningToXML(int* values, char* datetime) {
+void writeWarningToXML(char* warningType, int* values, char* datetime) {
     FILE *fileXML;
 
     fileXML = fopen("logger.xml", "ab+");
 
     fprintf(fileXML, "<warning>\n");
     fprintf(fileXML, "\t<datetime> %s </datetime>\n", datetime);
-    fprintf(fileXML, "\t<type> %d </type>\n", values[0]);
+    fprintf(fileXML, "\t<type> %s </type>\n", warningType);
     fprintf(fileXML, "\t<wind> %d </wind>\n", values[1]);
     fprintf(fileXML, "\t<humidity> %d </humidity>\n", values[2]);
     fprintf(fileXML, "\t<temperature> %d </temperature>\n", values[3]);
