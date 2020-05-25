@@ -23,7 +23,7 @@ int main() {
             char* received = receiveData(hSerial);
 
             if(received == NULL || received[0] == '\0') continue;
-            //printf("Received = %s\n\n", received);
+            printf("Received = %s\n", received);
 
             int isWarning = checkIfWarning(received);
             
@@ -70,7 +70,6 @@ int main() {
             }
 
             // Post received JSON to server before freeing up memory
-            
             initWinsock();
             SOCKET sck = createSocket();
             if (sck == 0 || !connectToServer(sck)) return 1;

@@ -7,7 +7,9 @@ int checkIfWarning(char* jsonString) {
     char content[64];
     strcpy(content, jsonString);
 
+    // Finds first quote in the string
     char* subString = strtok(content, "\"");
+    // Saves to substring values until second quote
     subString = strtok(NULL, "\"");
 
     if(strcmp(subString, "Warning") == 0) {
@@ -22,12 +24,12 @@ int* parseMessage(char* jsonString, int numValues) {
     int digit = 0;
     int quotes = 0;
     int length = strlen(jsonString);
-    int* parsedValues = (int*) malloc(sizeof(int) * 4);
+    int* parsedValues = (int*) malloc(sizeof(int) * numValues);
 
     for(int i = 0; i < length; i++) {
         if (jsonString[i] == '\"') {
             quotes++;
-        } else if(quotes % 2 == 0) {
+        } else if(quotes != 0 && quotes % 2 == 0) {
             int number = 0;
 
             while(jsonString[i] >= '0' && jsonString[i] <= '9') {
