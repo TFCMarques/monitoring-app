@@ -12,21 +12,18 @@ HANDLE openSerialPort(char * serialPort) {
     if (hSerial == INVALID_HANDLE_VALUE) {
         fprintf(stderr, "Error.\n");
         return NULL;
-    } else fprintf(stderr, "OK.\n\n");
+    } else fprintf(stderr, "OK.\n");
 
-    return hSerial;
-}
-
-int setDCBParameters(HANDLE hSerial) {
     // Initializing DCB struct
     DCB dcbSerialParams = {0};
 
     dcbSerialParams.DCBlength = sizeof(dcbSerialParams);
-    
+
+    fprintf(stderr, "> Setting DCB Parameters: ");
     if (!GetCommState(hSerial, &dcbSerialParams)) {
-        fprintf(stderr, "Error getting device state\n");
+        fprintf(stderr, "Error getting device state.\n");
         CloseHandle(hSerial);
-        return 0;
+        return NULL;
     }
 
     // Set device parameters (9200 baud, 1 start bit, 1 stop bit, no parity)
@@ -36,15 +33,14 @@ int setDCBParameters(HANDLE hSerial) {
     dcbSerialParams.Parity = NOPARITY;
 
     if (!SetCommState(hSerial, &dcbSerialParams)) {
-        fprintf(stderr, "Error setting device parameters\n");
+        fprintf(stderr, "Error setting device parameters.\n");
         CloseHandle(hSerial);
-        return 0;
-    } else return 1;
-}
+        return NULL;
+    } else fprintf(stderr, "OK.\n");
 
-int setTimeouts(HANDLE hSerial) {
     COMMTIMEOUTS timeouts = {0};
 
+    fprintf(stderr, "> Setting COM timeouts: ");
     // Set COM port timeout settings
     timeouts.ReadIntervalTimeout = 50;
     timeouts.ReadTotalTimeoutConstant = 50;
@@ -53,10 +49,12 @@ int setTimeouts(HANDLE hSerial) {
     timeouts.WriteTotalTimeoutMultiplier = 10;
 
     if (!SetCommTimeouts(hSerial, &timeouts)) {
-        fprintf(stderr, "Error setting timeouts\n");
+        fprintf(stderr, "Error setting timeouts.\n");
         CloseHandle(hSerial);
-        return 0;
-    } else return 1;
+        return NULL;
+    } else fprintf(stderr, "OK.\n\n");
+
+    return hSerial;
 }
 
 int setReceivingMask(HANDLE hSerial) {
@@ -87,7 +85,7 @@ int sendData(HANDLE hSerial, char* data) {
         CloseHandle(hSerial);
 		return 0;
     } else {
-		fprintf(stderr, "%ld bytes written\n", bytesWritten);
+		fprintf(stderr, "%ld bytes written\n\n", bytesWritten);
 		return 1;
 	}
 }

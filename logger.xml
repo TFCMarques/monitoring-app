@@ -36,3 +36,141 @@
 	<humidity> 50 </humidity>
 	<temperature> 13 </temperature>
 </msg1>
+<warning>
+	<datetime> 26/05/2020 - 11:56 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>
+<msg1>
+	<datetime> 26/05/2020 - 11:56 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 11:56 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 11:56 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 11:56 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<warning>
+	<datetime> 26/05/2020 - 12:14 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>
+<msg1>
+	<datetime> 26/05/2020 - 12:14 </datetime>
+	<wind> 155 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<warning>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>
+<warning>
+	<datetime> 26/05/2020 - 12:19 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>
+<msg1>
+	<datetime> 26/05/2020 - 12:28 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<warning>
+	<datetime> 26/05/2020 - 14:51 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>
+<msg1>
+	<datetime> 26/05/2020 - 14:55 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 14:55 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 14:55 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 14:57 </datetime>
+	<wind> 134 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<msg1>
+	<datetime> 26/05/2020 - 15:06 </datetime>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</msg1>
+<warning>
+	<datetime> 26/05/2020 - 15:06 </datetime>
+	<type> Wind Gusts </type>
+	<wind> 46 </wind>
+	<humidity> 50 </humidity>
+	<temperature> 27 </temperature>
+</warning>

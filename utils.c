@@ -12,3 +12,10 @@ char* getDatetime() {
         
     return timeString;
 }
+
+void showMenu() {
+    printf("> Monitoring and Registering Application:\n");
+    printf("- X - Request current measurements\n");
+    printf("- Y - Change threshold values\n");
+    printf("- Z - Show menu\n\n");
+}

@@ -4,8 +4,6 @@
 #define	COMMUNICATION_H
 
 HANDLE openSerialPort();
-int setDCBParameters(HANDLE hSerial);
-int setTimeouts(HANDLE hSerial);
 int setReceivingMask(HANDLE hSerial);
 int setWaitCommEvent(HANDLE hSerial);
 int sendData(HANDLE hSerial, char* data);
