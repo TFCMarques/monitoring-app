@@ -21,8 +21,8 @@ int main() {
             while(!kbhit()) {
                 char* received = receiveData(hSerial);
 
-                if(received == NULL || received[0] == '\0') continue;
-                // printf("\n\nReceived = %s\n", received);
+                if(received == NULL || received[0] == '\0' || strlen(received) < 5) continue;
+                //printf("\n\nReceived = %s", received);
 
                 char* currentTime = getDatetime();
                 int isWarning = checkIfWarning(received);

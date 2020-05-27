@@ -42,7 +42,7 @@ HANDLE openSerialPort(char * serialPort) {
 
     fprintf(stderr, "> Setting COM timeouts: ");
     // Set COM port timeout settings
-    timeouts.ReadIntervalTimeout = 50;
+    timeouts.ReadIntervalTimeout = 1000;
     timeouts.ReadTotalTimeoutConstant = 50;
     timeouts.ReadTotalTimeoutMultiplier = 10;
     timeouts.WriteTotalTimeoutConstant = 50;
@@ -97,14 +97,12 @@ char* receiveData(HANDLE hSerial) {
     char currentChar;
 
     do {
-        if(!ReadFile(hSerial, &currentChar, sizeof(currentChar), &readBytes, NULL)) {
-            fprintf(stderr, "Error receiving bytes.\n");
-            CloseHandle(hSerial);
-       		return NULL;
-		} else {
-			dataBuffer[i++] = currentChar;
-		}
-    } while(readBytes > 0);
+        ReadFile(hSerial, &currentChar, sizeof(currentChar), &readBytes, NULL);
+
+        if(readBytes > 0) {
+            dataBuffer[i++] = currentChar;
+        }
+    } while(currentChar != '\n');
 
     dataBuffer[i] = '\0';
 	return dataBuffer;
