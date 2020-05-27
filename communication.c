@@ -91,7 +91,7 @@ int sendData(HANDLE hSerial, char* data) {
 }
 
 char* receiveData(HANDLE hSerial) {
-	int i = 0, j;
+	int i = 0;
     DWORD readBytes;
     char* dataBuffer = (char*) malloc(sizeof(char) * 512);
     char currentChar;
@@ -106,15 +106,8 @@ char* receiveData(HANDLE hSerial) {
 		}
     } while(readBytes > 0);
 
-	// Remove last 2 duplicated chars
-	char* response = (char*) malloc(sizeof(char) * 512);
-	for(j = 0; j < i - 2; j++) {
-		response[j] = dataBuffer[j];
-	}
-	
-	free(dataBuffer);
-	response[j] = '\0';
-	return response;
+    dataBuffer[i] = '\0';
+	return dataBuffer;
 }
 
 int closeSerialPort(HANDLE hSerial) {

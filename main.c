@@ -26,7 +26,7 @@ int main() {
 
                 char* currentTime = getDatetime();
                 int isWarning = checkIfWarning(received);
-                
+
                 if (isWarning == 0) {
                     int* values = parseMessage(received, 3);
 
