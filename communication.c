@@ -99,7 +99,7 @@ char* receiveData(HANDLE hSerial) {
     do {
         ReadFile(hSerial, &currentChar, sizeof(currentChar), &readBytes, NULL);
 
-        if(readBytes > 0) {
+        if(readBytes > 0 && currentChar != '\n' && currentChar != '\n') {
             dataBuffer[i++] = currentChar;
         }
     } while(currentChar != '\n');

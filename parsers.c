@@ -30,7 +30,11 @@ int* parseMessage(char* jsonString, int numValues) {
         if (jsonString[i] == '\"') {
             quotes++;
         } else if(quotes != 0 && quotes % 2 == 0) {
-            int number = 0;
+            int number = -1;
+
+    	    if (jsonString[i] >= '0' && jsonString[i] <= '9') {
+                number = 0;
+            }
 
             while(jsonString[i] >= '0' && jsonString[i] <= '9') {
                 digit = jsonString[i] - '0';
@@ -38,7 +42,7 @@ int* parseMessage(char* jsonString, int numValues) {
                 i++;
             }
 
-            if(number != 0) {
+            if(number != -1) {
                 parsedValues[j] = number;
                 j++;
             }
