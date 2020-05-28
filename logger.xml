@@ -1,13 +1,19 @@
+<msg1>
+	<datetime> 28/05/2020 - 02:58 </datetime>
+	<wind> 0 </wind>
+	<humidity> 0 </humidity>
+	<temperature> 0 </temperature>
+</msg1>
+<msg1>
+	<datetime> 28/05/2020 - 02:58 </datetime>
+	<wind> 0 </wind>
+	<humidity> 0 </humidity>
+	<temperature> 0 </temperature>
+</msg1>
 <warning>
-	<datetime> 27/05/2020 - 18:30 </datetime>
+	<datetime> 28/05/2020 - 02:58 </datetime>
 	<type> Wind Gusts </type>
 	<wind> 46 </wind>
-	<humidity> 0 </humidity>
+	<humidity> 50 </humidity>
 	<temperature> 27 </temperature>
 </warning>
-<msg1>
-	<datetime> 27/05/2020 - 18:30 </datetime>
-	<wind> 46 </wind>
-	<humidity> 100 </humidity>
-	<temperature> 32 </temperature>
-</msg1>
